@@ -32,15 +32,15 @@
     <div style="flex: 1; padding: 20px;">
       <h1>User Manager</h1>
       <p>Here we will manage users.</p>
-      
-       <h3>Add New User</h3>
-      
-      <form>
-        <input type="text" placeholder="User Name" required><br><br>
-      
-        <input type="email" placeholder="Email" required><br><br>
-      
-        <select required>
+
+      <h3>Add New User</h3>
+
+      <form onsubmit="addUser(event)">
+        <input type="text" id="userName" placeholder="User Name" required><br><br>
+
+        <input type="email" id="userEmail" placeholder="Email" required><br><br>
+
+        <select id="userRole" required>
           <option value="">Select Role</option>
           <option>Super Admin</option>
           <option>Admin</option>
@@ -48,13 +48,13 @@
           <option>Sales Executive</option>
           <option>Viewer</option>
         </select><br><br>
-      
+
         <button type="submit">Add User</button>
       </form>
-      
+
       <hr>
 
-      <table border="1" cellpadding="10" cellspacing="0">
+      <table border="1" cellpadding="10" cellspacing="0" id="usersTable">
         <tr>
           <th>Name</th>
           <th>Email</th>
@@ -74,6 +74,31 @@
     </div>
 
   </div>
+
+  <script>
+    function addUser(event) {
+      event.preventDefault();
+
+      var userName = document.getElementById("userName").value;
+      var userEmail = document.getElementById("userEmail").value;
+      var userRole = document.getElementById("userRole").value;
+
+      var table = document.getElementById("usersTable");
+      var newRow = table.insertRow(-1);
+
+      var cell1 = newRow.insertCell(0);
+      var cell2 = newRow.insertCell(1);
+      var cell3 = newRow.insertCell(2);
+
+      cell1.innerHTML = userName;
+      cell2.innerHTML = userEmail;
+      cell3.innerHTML = userRole;
+
+      document.getElementById("userName").value = "";
+      document.getElementById("userEmail").value = "";
+      document.getElementById("userRole").value = "";
+    }
+  </script>
 
 </body>
 </html>
