@@ -57,20 +57,27 @@
           <th>Lead Name</th>
           <th>Company</th>
           <th>Status</th>
-          <th>Action</th>
+          <th>Actions</th>
         </tr>
-        <tr>
-          <td>John Doe</td>
-          <td>ABC Travels</td>
-          <td>New</td>
-          <td><button type="button" onclick="deleteLead(this)">Delete</button></td>
-        </tr>
-        <tr>
-          <td>Mary Smith</td>
-          <td>XYZ Corp</td>
-          <td>Follow-up</td>
-          <td><button type="button" onclick="deleteLead(this)">Delete</button></td>
-        </tr>
+ <tr>
+  <td>John Doe</td>
+  <td>ABC Travels</td>
+  <td>New</td>
+  <td>
+    <button type="button" onclick="editLead(this)">Edit</button>
+    <button type="button" onclick="deleteLead(this)">Delete</button>
+  </td>
+</tr>
+
+<tr>
+  <td>Mary Smith</td>
+  <td>XYZ Corp</td>
+  <td>Follow-up</td>
+  <td>
+    <button type="button" onclick="editLead(this)">Edit</button>
+    <button type="button" onclick="deleteLead(this)">Delete</button>
+  </td>
+</tr>
       </table>
     </div>
 
