@@ -457,11 +457,56 @@
           <h1>Dashboard</h1>
           <p>Welcome to your premium CRM workspace</p>
         </div>
+<div class="profile-menu">
+  <div class="profile-trigger" onclick="toggleProfileMenu()">
+    <div class="profile-avatar">
+      A
+    </div>
 
-        <div class="profile-box">
-          <strong>Super Admin</strong>
-          <span>admin@satguru.com</span>
-        </div>
+    <div class="profile-text">
+      <strong>Avinash</strong>
+      <span>Super Admin</span>
+    </div>
+
+    <div class="profile-arrow">▼</div>
+  </div>
+
+  <div class="profile-dropdown" id="profileDropdown">
+    <div class="profile-card-top">
+      <div class="profile-card-avatar">A</div>
+
+      <div class="profile-card-info">
+        <h3>Avinash</h3>
+        <p>Super Admin</p>
+        <p>admin@satguru.com</p>
+      </div>
+    </div>
+
+    <div class="profile-detail-list">
+      <div class="profile-detail-item">
+        <small>User ID</small>
+        <strong>SG-ADMIN-001</strong>
+      </div>
+
+      <div class="profile-detail-item">
+        <small>Department</small>
+        <strong>CRM & Sales Management</strong>
+      </div>
+
+      <div class="profile-detail-item">
+        <small>Access Level</small>
+        <strong>Full System Access</strong>
+      </div>
+    </div>
+
+    <div class="profile-action-list">
+      <button class="profile-action-btn" type="button" onclick="editProfile()">Edit Profile</button>
+      <button class="profile-action-btn" type="button" onclick="viewAccount()">My Account</button>
+      <button class="profile-action-btn" type="button" onclick="openSettings()">Settings</button>
+      <button class="profile-action-btn profile-signout" type="button" onclick="window.location.href='index.html'">Sign Out</button>
+    </div>
+  </div>
+</div>
       </div>
 
       <div class="content">
