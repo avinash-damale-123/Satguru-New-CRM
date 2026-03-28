@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -272,18 +272,10 @@
       flex: 1;
     }
 
-    .btn-primary:hover {
-      opacity: 0.95;
-    }
-
     .btn-secondary {
       background: #e5e7eb;
       color: #111827;
       flex: 1;
-    }
-
-    .btn-secondary:hover {
-      background: #d1d5db;
     }
 
     .toolbar {
@@ -395,17 +387,9 @@
       color: #1d4ed8;
     }
 
-    .btn-edit:hover {
-      background: #bfdbfe;
-    }
-
     .btn-delete {
       background: #fee2e2;
       color: #dc2626;
-    }
-
-    .btn-delete:hover {
-      background: #fecaca;
     }
 
     .empty-text {
@@ -692,15 +676,9 @@
       for (var i = 1; i < rows.length; i++) {
         var role = rows[i].cells[2].innerText.trim();
 
-        if (role === "Admin" || role === "Super Admin") {
-          admins++;
-        }
-        if (role === "Manager") {
-          managers++;
-        }
-        if (role === "Sales Executive") {
-          sales++;
-        }
+        if (role === "Admin" || role === "Super Admin") admins++;
+        if (role === "Manager") managers++;
+        if (role === "Sales Executive") sales++;
       }
 
       document.getElementById("totalUsers").innerText = totalUsers;
