@@ -103,8 +103,9 @@
       cell1.innerHTML = leadName;
       cell2.innerHTML = companyName;
       cell3.innerHTML = leadStatus;
-      cell4.innerHTML = '<button type="button" onclick="deleteLead(this)">Delete</button>';
-
+      cell4.innerHTML = `
+        <button type="button" onclick="editLead(this)">Edit</button>
+        <button type="button" onclick="deleteLead(this)">Delete</button>`;
       document.getElementById("leadName").value = "";
       document.getElementById("companyName").value = "";
       document.getElementById("leadStatus").value = "";
