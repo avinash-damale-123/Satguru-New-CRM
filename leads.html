@@ -1,89 +1,486 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Leads - Satguru CRM</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+
+    a { text-decoration: none; }
+
+    .app { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(180deg, #0f172a, #1e293b);
+      color: white;
+      padding: 24px 18px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      overflow-y: auto;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.08);
+    }
+
+    .brand { margin-bottom: 28px; }
+    .brand h2 { font-size: 24px; font-weight: 700; }
+    .brand small {
+      display: block;
+      color: #94a3b8;
+      margin-top: 6px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .menu-title {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .nav { list-style: none; }
+    .nav li { margin-bottom: 10px; }
+
+    .nav a, .nav .inactive {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 12px;
+      color: #e2e8f0;
+      transition: 0.2s ease;
+      font-size: 15px;
+    }
+
+    .nav a:hover, .nav .inactive:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .nav a.active {
+      background: linear-gradient(90deg, #3b82f6, #2563eb);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 8px 18px rgba(37,99,235,0.25);
+    }
+
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .logout-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: #ef4444;
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .main {
+      margin-left: 250px;
+      width: calc(100% - 250px);
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 18px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .topbar p {
+      color: #6b7280;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .profile-box {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 10px 14px;
+      text-align: right;
+    }
+
+    .profile-box strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .profile-box span {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .content { padding: 28px; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+      border: 1px solid #eef2f7;
+    }
+
+    .panel-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .panel-subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 22px;
+    }
+
+    .form-group { margin-bottom: 16px; }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    .input, .select {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 14px;
+      background: #fff;
+      outline: none;
+    }
+
+    .input:focus, .select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.12);
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .btn-primary, .btn-secondary, .btn-edit, .btn-delete {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #2563eb, #1d4ed8);
+      color: white;
+      flex: 1;
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+      flex: 1;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-box input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.12);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    th {
+      background: #f8fafc;
+      color: #374151;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 16px 14px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    td {
+      padding: 16px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
+      color: #111827;
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: #f9fbff;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .status-new {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .status-follow-up {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .status-converted {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-edit {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .btn-delete {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .empty-text {
+      color: #6b7280;
+      font-size: 14px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 1100px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .app {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <h2>Satguru CRM</h2>
+        <small>Sales Workspace</small>
+      </div>
 
-<body style="font-family: Arial; margin: 0;">
-
-  <div style="background-color: #333; color: white; padding: 15px;">
-    <h2>Satguru CRM</h2>
-  </div>
-
-  <div style="display: flex;">
-
-    <div style="width: 200px; background-color: #f4f4f4; padding: 20px; height: 100vh;">
-      <h3>Menu</h3>
-      <ul style="list-style: none; padding: 0;">
+      <div class="menu-title">Main Menu</div>
+      <ul class="nav">
         <li><a href="home.html">Dashboard</a></li>
-        <li><a href="leads.html">Leads</a></li>
-        <li>Accounts</li>
-        <li>Contacts</li>
+        <li><a href="leads.html" class="active">Leads</a></li>
+        <li><a href="users.html">Users</a></li>
+        <li><span class="inactive">Accounts</span></li>
+        <li><span class="inactive">Contacts</span></li>
       </ul>
 
-      <br>
+      <div class="sidebar-footer">
+        <a href="index.html">
+          <button class="logout-btn" type="button">Logout</button>
+        </a>
+      </div>
+    </aside>
 
-      <a href="index.html">
-        <button>Logout</button>
-      </a>
-    </div>
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Lead Management</h1>
+          <p>Create, update, search, and manage all leads</p>
+        </div>
 
-    <div style="flex: 1; padding: 20px;">
-      <h1>Leads Page</h1>
+        <div class="profile-box">
+          <strong>Super Admin</strong>
+          <span>admin@satguru.com</span>
+        </div>
+      </div>
 
-      <h3>Add New Lead</h3>
+      <div class="content">
+        <div class="layout">
+          <section class="card">
+            <div class="panel-title">Add / Edit Lead</div>
+            <div class="panel-subtitle">Manage lead details from one form</div>
 
-      <form onsubmit="addLead(event)">
-        <input type="text" id="leadName" placeholder="Lead Name" required><br><br>
+            <form onsubmit="addLead(event)">
+              <div class="form-group">
+                <label for="leadName">Lead Name</label>
+                <input class="input" type="text" id="leadName" placeholder="Enter lead name" required>
+              </div>
 
-        <input type="text" id="companyName" placeholder="Company Name" required><br><br>
+              <div class="form-group">
+                <label for="companyName">Company Name</label>
+                <input class="input" type="text" id="companyName" placeholder="Enter company name" required>
+              </div>
 
-        <select id="leadStatus" required>
-          <option value="">Select Status</option>
-          <option>New</option>
-          <option>Follow-up</option>
-          <option>Converted</option>
-        </select><br><br>
+              <div class="form-group">
+                <label for="leadStatus">Status</label>
+                <select class="select" id="leadStatus" required>
+                  <option value="">Select Status</option>
+                  <option>New</option>
+                  <option>Follow-up</option>
+                  <option>Converted</option>
+                </select>
+              </div>
 
-        <button type="submit">Add Lead</button>
-      </form>
+              <div class="btn-row">
+                <button class="btn-primary" type="submit">Save Lead</button>
+                <button class="btn-secondary" type="button" onclick="clearForm()">Clear</button>
+              </div>
+            </form>
+          </section>
 
-      <hr>
+          <section class="card">
+            <div class="toolbar">
+              <div>
+                <div class="panel-title">Leads List</div>
+                <div class="panel-subtitle">Search and manage lead records</div>
+              </div>
 
-      <p>Here we will manage all leads.</p>
+              <div class="search-box">
+                <input type="text" id="searchBox" placeholder="Search by lead or company..." onkeyup="searchLeads()">
+              </div>
+            </div>
 
-      <table border="1" cellpadding="10" cellspacing="0" id="leadsTable">
-        <tr>
-          <th>Lead Name</th>
-          <th>Company</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
- <tr>
-  <td>John Doe</td>
-  <td>ABC Travels</td>
-  <td>New</td>
-  <td>
-    <button type="button" onclick="editLead(this)">Edit</button>
-    <button type="button" onclick="deleteLead(this)">Delete</button>
-  </td>
-</tr>
+            <div class="table-wrap">
+              <table id="leadsTable">
+                <tr>
+                  <th>Lead Name</th>
+                  <th>Company</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
 
-<tr>
-  <td>Mary Smith</td>
-  <td>XYZ Corp</td>
-  <td>Follow-up</td>
-  <td>
-    <button type="button" onclick="editLead(this)">Edit</button>
-    <button type="button" onclick="deleteLead(this)">Delete</button>
-  </td>
-</tr>
-      </table>
-    </div>
+                <tr>
+                  <td>John Doe</td>
+                  <td>ABC Travels</td>
+                  <td><span class="status-badge status-new">New</span></td>
+                  <td>
+                    <div class="action-buttons">
+                      <button class="btn-edit" type="button" onclick="editLead(this)">Edit</button>
+                      <button class="btn-delete" type="button" onclick="deleteLead(this)">Delete</button>
+                    </div>
+                  </td>
+                </tr>
 
+                <tr>
+                  <td>Mary Smith</td>
+                  <td>XYZ Corp</td>
+                  <td><span class="status-badge status-follow-up">Follow-up</span></td>
+                  <td>
+                    <div class="action-buttons">
+                      <button class="btn-edit" type="button" onclick="editLead(this)">Edit</button>
+                      <button class="btn-delete" type="button" onclick="deleteLead(this)">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+
+              <p class="empty-text" id="noResults" style="display:none;">No leads found.</p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
   </div>
 
   <script>
+    function getStatusClass(status) {
+      return "status-badge status-" + status.toLowerCase().replace(/\s+/g, "-");
+    }
+
     function addLead(event) {
       event.preventDefault();
 
@@ -92,7 +489,6 @@
       var leadStatus = document.getElementById("leadStatus").value;
 
       var table = document.getElementById("leadsTable");
-
       var newRow = table.insertRow(-1);
 
       var cell1 = newRow.insertCell(0);
@@ -102,33 +498,65 @@
 
       cell1.innerHTML = leadName;
       cell2.innerHTML = companyName;
-      cell3.innerHTML = leadStatus;
+      cell3.innerHTML = '<span class="' + getStatusClass(leadStatus) + '">' + leadStatus + '</span>';
       cell4.innerHTML = `
-        <button type="button" onclick="editLead(this)">Edit</button>
-        <button type="button" onclick="deleteLead(this)">Delete</button>`;
+        <div class="action-buttons">
+          <button class="btn-edit" type="button" onclick="editLead(this)">Edit</button>
+          <button class="btn-delete" type="button" onclick="deleteLead(this)">Delete</button>
+        </div>
+      `;
+
+      clearForm();
+      searchLeads();
+    }
+
+    function deleteLead(button) {
+      var row = button.parentNode.parentNode.parentNode;
+      row.remove();
+      searchLeads();
+    }
+
+    function editLead(button) {
+      var row = button.parentNode.parentNode.parentNode;
+
+      var name = row.cells[0].innerText;
+      var company = row.cells[1].innerText;
+      var status = row.cells[2].innerText;
+
+      document.getElementById("leadName").value = name;
+      document.getElementById("companyName").value = company;
+      document.getElementById("leadStatus").value = status;
+
+      row.remove();
+      searchLeads();
+    }
+
+    function clearForm() {
       document.getElementById("leadName").value = "";
       document.getElementById("companyName").value = "";
       document.getElementById("leadStatus").value = "";
     }
 
-    function deleteLead(button) {
-      var row = button.parentNode.parentNode;
-      row.remove();
+    function searchLeads() {
+      var input = document.getElementById("searchBox").value.toLowerCase();
+      var table = document.getElementById("leadsTable");
+      var rows = table.getElementsByTagName("tr");
+      var visibleCount = 0;
+
+      for (var i = 1; i < rows.length; i++) {
+        var leadName = rows[i].cells[0].innerText.toLowerCase();
+        var companyName = rows[i].cells[1].innerText.toLowerCase();
+
+        if (leadName.includes(input) || companyName.includes(input)) {
+          rows[i].style.display = "";
+          visibleCount++;
+        } else {
+          rows[i].style.display = "none";
+        }
+      }
+
+      document.getElementById("noResults").style.display = visibleCount === 0 ? "block" : "none";
     }
-    function editLead(button) {
-    var row = button.parentNode.parentNode;
-
-    var name = row.cells[0].innerText;
-    var company = row.cells[1].innerText;
-    var status = row.cells[2].innerText;
-
-    document.getElementById("leadName").value = name;
-    document.getElementById("companyName").value = company;
-    document.getElementById("leadStatus").value = status;
-
-    row.remove();
-  }
   </script>
-
 </body>
 </html>
