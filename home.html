@@ -1,63 +1,332 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>CRM Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Satguru CRM</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+
+    a { text-decoration: none; }
+
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(180deg, #0f172a, #1e293b);
+      color: white;
+      padding: 24px 18px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      overflow-y: auto;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.08);
+    }
+
+    .brand { margin-bottom: 28px; }
+    .brand h2 { font-size: 24px; font-weight: 700; }
+    .brand small {
+      display: block;
+      color: #94a3b8;
+      margin-top: 6px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .menu-title {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .nav { list-style: none; }
+    .nav li { margin-bottom: 10px; }
+
+    .nav a, .nav .inactive {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 12px;
+      color: #e2e8f0;
+      transition: 0.2s ease;
+      font-size: 15px;
+    }
+
+    .nav a:hover, .nav .inactive:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .nav a.active {
+      background: linear-gradient(90deg, #3b82f6, #2563eb);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 8px 18px rgba(37,99,235,0.25);
+    }
+
+    .sidebar-footer {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .logout-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: #ef4444;
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .main {
+      margin-left: 250px;
+      width: calc(100% - 250px);
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 18px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .topbar p {
+      color: #6b7280;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .profile-box {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 10px 14px;
+      text-align: right;
+    }
+
+    .profile-box strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .profile-box span {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .content {
+      padding: 28px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+      border: 1px solid #eef2f7;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 10px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .section-subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 22px;
+    }
+
+    .activity-list {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+
+    .activity-list li {
+      background: #f8fafc;
+      border: 1px solid #edf2f7;
+      border-radius: 14px;
+      padding: 14px;
+      color: #334155;
+    }
+
+    .quick-links {
+      display: grid;
+      gap: 14px;
+    }
+
+    .quick-link {
+      display: block;
+      background: linear-gradient(135deg, #eff6ff, #ffffff);
+      border: 1px solid #dbeafe;
+      border-radius: 16px;
+      padding: 18px;
+      color: #1e3a8a;
+      font-weight: 700;
+    }
+
+    @media (max-width: 1100px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .app {
+        flex-direction: column;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-
-<body style="font-family: Arial; margin: 0;">
-
-  <!-- Top Bar -->
-  <div style="background-color: #333; color: white; padding: 15px;">
-    <h2>Satguru CRM</h2>
-  </div>
-
-  <!-- Sidebar + Content -->
-  <div style="display: flex;">
-
-    <!-- Sidebar -->
-    <div style="width: 200px; background-color: #f4f4f4; padding: 20px; height: 100vh;">
-      <h3>Menu</h3>
-      <ul style="list-style: none; padding: 0;">
-        <li><a href="home.html">Dashboard</a></li>
-        <li><a href="leads.html">Leads</a></li>
-        <li><a href="users.html">Users</a></li>
-        <li>Accounts</li>
-        <li>Contacts</li>
-      </ul>
-
-      <br>
-
-      <a href="index.html">
-        <button>Logout</button>
-      </a>
-    </div>
-
-    <!-- Main Content -->
-    <div style="flex: 1; padding: 20px;">
-      <h1>Dashboard</h1>
-
-      <div style="display: flex; gap: 20px;">
-
-        <div style="background: #e3f2fd; padding: 20px; width: 150px;">
-          <h3>Leads</h3>
-          <p>10</p>
-        </div>
-
-        <div style="background: #e8f5e9; padding: 20px; width: 150px;">
-          <h3>Accounts</h3>
-          <p>5</p>
-        </div>
-
-        <div style="background: #fff3e0; padding: 20px; width: 150px;">
-          <h3>Contacts</h3>
-          <p>20</p>
-        </div>
-
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <h2>Satguru CRM</h2>
+        <small>Main Workspace</small>
       </div>
 
-    </div>
+      <div class="menu-title">Main Menu</div>
+      <ul class="nav">
+        <li><a href="home.html" class="active">Dashboard</a></li>
+        <li><a href="leads.html">Leads</a></li>
+        <li><a href="users.html">Users</a></li>
+        <li><span class="inactive">Accounts</span></li>
+        <li><span class="inactive">Contacts</span></li>
+      </ul>
 
+      <div class="sidebar-footer">
+        <a href="index.html">
+          <button class="logout-btn" type="button">Logout</button>
+        </a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Dashboard</h1>
+          <p>Welcome to your premium CRM workspace</p>
+        </div>
+
+        <div class="profile-box">
+          <strong>Super Admin</strong>
+          <span>admin@satguru.com</span>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="stats">
+          <div class="card">
+            <div class="stat-label">Total Leads</div>
+            <div class="stat-value">128</div>
+          </div>
+          <div class="card">
+            <div class="stat-label">Active Users</div>
+            <div class="stat-value">14</div>
+          </div>
+          <div class="card">
+            <div class="stat-label">Accounts</div>
+            <div class="stat-value">52</div>
+          </div>
+          <div class="card">
+            <div class="stat-label">Pending Follow-ups</div>
+            <div class="stat-value">21</div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <section class="card">
+            <div class="section-title">Recent CRM Activity</div>
+            <div class="section-subtitle">Track what is happening in your system</div>
+            <ul class="activity-list">
+              <li>New lead added for ABC Travels</li>
+              <li>User role updated for Sales Executive</li>
+              <li>Follow-up marked complete for XYZ Corp</li>
+              <li>Dashboard metrics refreshed successfully</li>
+            </ul>
+          </section>
+
+          <section class="card">
+            <div class="section-title">Quick Access</div>
+            <div class="section-subtitle">Open the most important modules</div>
+            <div class="quick-links">
+              <a class="quick-link" href="leads.html">Open Leads Module</a>
+              <a class="quick-link" href="users.html">Open User Manager</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
   </div>
-
 </body>
 </html>
