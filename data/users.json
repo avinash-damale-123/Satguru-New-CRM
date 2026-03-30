@@ -1,1 +1,29 @@
-[]
+[
+  {
+    "id": "USR-001",
+    "name": "Avinash",
+    "email": "admin@satguru.com",
+    "role": "Super Admin",
+    "branch": "Pune",
+    "department": "CRM",
+    "status": "Active"
+  },
+  {
+    "id": "USR-002",
+    "name": "Branch Sales",
+    "email": "sales@satguru.com",
+    "role": "Sales Executive",
+    "branch": "Nairobi",
+    "department": "Sales",
+    "status": "Active"
+  },
+  {
+    "id": "USR-003",
+    "name": "Coordinator",
+    "email": "coordinator@satguru.com",
+    "role": "CRM Coordinator",
+    "branch": "Pune",
+    "department": "CRM Analytics",
+    "status": "Active"
+  }
+]
