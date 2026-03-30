@@ -8,12 +8,15 @@
   --muted: #6b7280;
   --line: #e5e7eb;
   --line-strong: #cbd5cf;
+
   --primary: #0f7b3e;
   --primary-dark: #0b5f30;
   --primary-soft: #eaf6ef;
+
   --success: #15803d;
   --warning: #f47c20;
   --danger: #dc2626;
+
   --navy: #f3f8f4;
   --navy-2: #eaf6ef;
   --shadow: 0 12px 32px rgba(15,23,42,.08);
