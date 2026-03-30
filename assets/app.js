@@ -35,8 +35,8 @@ const APP = {
     this.state.data = Object.fromEntries(entries);
   },
   bindShell() {
-    const toggle = document.getElementById('sidebarToggle');
-    if (toggle) toggle.addEventListener('click', ()=>this.toggleSidebar());
+    const toggles = document.querySelectorAll('.js-sidebar-toggle');
+    toggles.forEach((toggle)=>toggle.addEventListener('click', ()=>this.toggleSidebar()));
     const bell = document.getElementById('notificationToggle');
     if (bell) bell.addEventListener('click', (e)=>{e.stopPropagation(); this.togglePanel('notificationsOpen');});
     const profile = document.getElementById('profileToggle');
