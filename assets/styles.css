@@ -41,7 +41,7 @@ button,input,select,textarea{font:inherit}
   top:0;
   bottom:0;
   width:var(--sidebar-width);
-  background:linear-gradient(180deg,var(--navy),var(--navy-2));
+  background:#f3f8f4;
   color:#1f2937;
   padding:20px 16px;
   overflow:auto;
@@ -58,7 +58,7 @@ button,input,select,textarea{font:inherit}
 .sidebar.collapsed .nav-link{justify-content:center}
 .sidebar.collapsed .nav-icon{margin-right:0}
 
-.brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
 .brand-mark{
   width:46px;
   height:46px;
@@ -124,9 +124,10 @@ button,input,select,textarea{font:inherit}
 }
 .nav-link:hover{background:#eef6f0}
 .nav-link.active{
-  background:#dff3e5;
+  background:linear-gradient(90deg,#dff3e5,#edf9f1);
   border-color:#b7e4c7;
-  color:#0f5132;
+  color:#0b5f30;
+  box-shadow:0 4px 12px rgba(15,123,62,.12);
 }
 .nav-icon{
   width:36px;
